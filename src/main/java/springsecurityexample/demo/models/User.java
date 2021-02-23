@@ -5,7 +5,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Objects;
 
 @Entity
 @Table(name="customers")
@@ -13,55 +12,33 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
-    private String userName;
+    private int id;
+    private String username;
     private String password;
+
 
     private boolean accountNonExpired;
     private boolean accountNonLocked;
-    private boolean credentialNonExpired;
+    private boolean credentialsNonExpired;
     private boolean isEnabled;
 
     public User(){}
-    public User(String userName, String password) {
-        this.userName = userName;
+
+    public User(String username, String password){
+        this.username = username;
         this.password = password;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
     public String getUsername() {
-        return null;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return username;
     }
 
     @Override
@@ -76,7 +53,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return credentialNonExpired;
+        return credentialsNonExpired;
     }
 
     @Override
@@ -84,26 +61,21 @@ public class User implements UserDetails {
         return isEnabled;
     }
 
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id == user.id && Objects.equals(userName, user.userName) && Objects.equals(password, user.password);
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, userName, password);
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
+
